@@ -1,5 +1,17 @@
 <?php
- if($json = json_decode(file_get_contents("php://input"), true)) {
+
+# Setup Mysql Connection
+$servername = "localhost";
+$username = "temperature";
+$password = file_get_contents('/home/tory/Workspace/temperature/mysql.pw', false);
+
+# Connect to MySQL
+$db = mysql_connect('$servername', '$username', '$password');
+if (!$db) {
+	die('Could not connect: ' . mysql_error());
+}
+
+if($json = json_decode(file_get_contents("php://input"), true)) {
      print_r($json);
      $data = $json;
  } else {
@@ -21,5 +33,8 @@
 
  $context = stream_context_create($options);
  $response = file_get_contents($url, false, $context);
+
+# Close out the DB connection
+mysql_close($db);
 
 ?>
