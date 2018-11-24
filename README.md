@@ -18,8 +18,11 @@ The Raspberry Pi 2 will have the DHT22 temperature / humidity sensors connected 
 
 ### Adafruit Python Library Install
 sudo apt-get -y install build-essential python-dev python-openssl git
+
 git clone https://github.com/adafruit/Adafruit_Python_DHT.git && cd Adafruit_Python_DHT
+
 sudo python setup.py install
+
 
 Once completed:
 cd examples
