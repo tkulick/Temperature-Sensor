@@ -5,8 +5,10 @@ temp=`echo $temperature | sed -rn 's/Temp\=([0-9]+\.[0-9]).*/\1/gp;'`
 
 hum=`echo $temperature | sed -rn 's/.*Humidity\=([0-9]+\.[0-9]+).*/\1/gp;'`
 
+ip=`curl https://ipinfo.io/ip`
+
 request_body=$( cat << EOF
-{"temperature":"$temp","humidity":"$hum"}
+{"temperature":"$temp","humidity":"$hum","ip":"$ip"}
 EOF
 )
 
