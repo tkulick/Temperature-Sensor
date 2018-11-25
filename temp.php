@@ -1,15 +1,13 @@
 <?php
 
 # Setup Mysql Connection
-$servername = "localhost";
+$servername = "127.0.0.1";
 $username = "temperature";
-$password = file_get_contents('/home/tory/Workspace/temperature/mysql.pw', false);
+$password = rtrim(file_get_contents('/var/www/html/temperature/mysql.pw', false));
+$db_name = "temperature";
 
 # Connect to MySQL
-$db = mysql_connect('$servername', '$username', '$password');
-if (!$db) {
-	die('Could not connect: ' . mysql_error());
-}
+$db = mysqli_connect("$servername", "$username", "$password", "$db_name");
 
 if($json = json_decode(file_get_contents("php://input"), true)) {
      print_r($json);
@@ -19,22 +17,18 @@ if($json = json_decode(file_get_contents("php://input"), true)) {
      $data = $_POST;
  }
 
- echo "Saving data ...\n";
- $url = "http://localhost:5984/incoming";
+$temp = $data["temperature"];
+$hum = $data["humidity"];
+$ip = $data["ip"];
 
- $meta = &#91;"received" => time(),
-     "status" => "new",
-     "agent" => $_SERVER['HTTP_USER_AGENT']];
- $options = ["http" => [
-     "method" => "POST",
-     "header" => ["Content-Type: application/json"],
-     "content" => json_encode(["data" => $data, "meta" => $meta])]
-     ];
+$sql = "INSERT INTO temperature (temperature, humidity, ip) VALUES ('$temp','$hum','$ip')";
 
- $context = stream_context_create($options);
- $response = file_get_contents($url, false, $context);
+if ($db->query($sql) === TRUE) {
+            echo "New record created successfully";
+} else {
+            echo "Error: " . $sql . "<br>" . $db->error;
+}
 
 # Close out the DB connection
-mysql_close($db);
-
+$db->close();
 ?>
