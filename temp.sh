@@ -1,5 +1,5 @@
 #!/bin/bash
-temperature=`/home/pi/Adafruit_Python_DHT/examples/AdafruitDHT.py 22 6`
+temperature=`/home/pi/temperature/dht-poll.py 22 6`
 
 temp=`echo $temperature | sed -rn 's/Temp\=([0-9]+\.[0-9]).*/\1/gp;'`
 
