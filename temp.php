@@ -17,10 +17,10 @@ if (!$db) {
 }
 
 if($json = json_decode(file_get_contents("php://input"), true)) {
-     # print_r($json);
+     #print_r($json);
      $data = $json;
  } else {
-     # print_r($_POST);
+     #print_r($_POST);
      $data = $_POST;
  }
 
@@ -33,12 +33,13 @@ $darksky = json_decode(file_get_contents($darksky_url), true);
 
 $out_temp = $darksky['currently']['temperature'];
 $out_hum = $darksky['currently']['humidity'];
+$out_hum = $out_hum * 100;
 
 $temp = $data["temperature"];
 $hum = $data["humidity"];
 $ip = $data["ip"];
 
-$sql = "INSERT INTO temperature (temperature, humidity, ip, outside-temp, outside-hum, location) VALUES ('$temp','$hum','$ip','$out_temp','$out_hum','$location_friendly')";
+$sql = "INSERT INTO temperature (temperature, humidity, ip, `outside-temp`, `outside-hum`, location) VALUES ('$temp','$hum','$ip','$out_temp','$out_hum','$location_friendly')";
 
 if ($db->query($sql) === TRUE) {
             echo "New record created successfully";
