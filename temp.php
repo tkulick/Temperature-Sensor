@@ -18,16 +18,20 @@ if($json = json_decode(file_get_contents("php://input"), true)) {
  }
 
 # Setup query for Dark Sky
+# Setup query for Dark Sky
 $secret = rtrim(file_get_contents('/var/www/html/temperature/api.sc', false));
 $location = "40.1612,-74.8821";
+$location_friendly = "Home";
 $darksky_url = "https://api.darksky.net/forecast/$secret/$location";
-$darksky = file_get_contents($darksky_url);
+$darksky = json_decode(file_get_contents($darksky_url));
+
+
 
 $temp = $data["temperature"];
 $hum = $data["humidity"];
 $ip = $data["ip"];
 
-$sql = "INSERT INTO temperature (temperature, humidity, ip) VALUES ('$temp','$hum','$ip')";
+$sql = "INSERT INTO temperature (temperature, humidity, ip, outside-temp, outside-hum, location) VALUES ('$temp','$hum','$ip','$out_temp','$out_hum','$location_friendly')";
 
 if ($db->query($sql) === TRUE) {
             echo "New record created successfully";
