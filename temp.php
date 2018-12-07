@@ -18,7 +18,6 @@ if($json = json_decode(file_get_contents("php://input"), true)) {
  }
 
 # Setup query for Dark Sky
-# Setup query for Dark Sky
 $secret = rtrim(file_get_contents('/var/www/html/temperature/api.sc', false));
 $location = "40.1612,-74.8821";
 $location_friendly = "Home";
