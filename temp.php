@@ -17,6 +17,12 @@ if($json = json_decode(file_get_contents("php://input"), true)) {
      $data = $_POST;
  }
 
+# Setup query for Dark Sky
+$secret = rtrim(file_get_contents('/var/www/html/temperature/api.sc', false));
+$location = "40.1612,-74.8821";
+$darksky_url = "https://api.darksky.net/forecast/$secret/$location";
+$darksky = file_get_contents($darksky_url);
+
 $temp = $data["temperature"];
 $hum = $data["humidity"];
 $ip = $data["ip"];
