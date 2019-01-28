@@ -1,5 +1,3 @@
-<?php
-
 # Setup Mysql Connection
 $servername = "127.0.0.1";
 $username = "temperature";
@@ -38,8 +36,9 @@ $out_hum = $out_hum * 100;
 $temp = $data["temperature"];
 $hum = $data["humidity"];
 $ip = $data["ip"];
+$internal = $data["internal"];
 
-$sql = "INSERT INTO temperature (temperature, humidity, ip, `outside-temp`, `outside-hum`, location) VALUES ('$temp','$hum','$ip','$out_temp','$out_hum','$location_friendly')";
+$sql = "INSERT INTO temperature (temperature, humidity, ip, `int-ip`, `outside-temp`, `outside-hum`, location) VALUES ('$temp','$hum','$ip','$internal','$out_temp','$out_hum','$location_friendly')";
 
 if ($db->query($sql) === TRUE) {
             echo "New record created successfully";
