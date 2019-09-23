@@ -32,13 +32,14 @@ $darksky = json_decode(file_get_contents($darksky_url), true);
 $out_temp = $darksky['currently']['temperature'];
 $out_hum = $darksky['currently']['humidity'];
 $out_hum = $out_hum * 100;
+$out_pressure = $darksky['currently']['pressure'];
 
 $temp = $data["temperature"];
 $hum = $data["humidity"];
 $ip = $data["ip"];
 $internal = $data["internal"];
 
-$sql = "INSERT INTO temperature (temperature, humidity, ip, `int-ip`, `outside-temp`, `outside-hum`, location) VALUES ('$temp','$hum','$ip','$internal','$out_temp','$out_hum','$location_friendly')";
+$sql = "INSERT INTO temperature (temperature, humidity, ip, `int-ip`, `outside-temp`, `outside-hum`, `outside-pressure`, location) VALUES ('$temp','$hum','$ip','$internal','$out_temp','$out_hum','$out_pressure','$location_friendly')";
 
 if ($db->query($sql) === TRUE) {
             echo "New record created successfully";
